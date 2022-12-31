@@ -3,37 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class ObserverAudio : MonoBehaviour
+namespace DesignPatterns.EventMediator
 {
-    [SerializeField] float delay = 0f;
-    private AudioSource source;
-
-    private void Awake()
+    [RequireComponent(typeof(AudioSource))]
+    public class ObserverAudio : MonoBehaviour
     {
-        source = GetComponent<AudioSource>();
-    }
+        [SerializeField] float delay = 0f;
+        private AudioSource source;
 
-    private void Start()
-    {
-        EventMediator.Subscribe<OnClickButtonEvent>(OnThingHappened);
-    }
+        private void Awake()
+        {
+            source = GetComponent<AudioSource>();
+        }
 
-    public void OnThingHappened(OnClickButtonEvent e)
-    {
-        StartCoroutine(PlayWithDelay());
-    }
+        private void Start()
+        {
+            EventMediator.Subscribe<OnClickButtonEvent>(OnThingHappened);
+        }
 
-    IEnumerator PlayWithDelay()
-    {
-        yield return new WaitForSeconds(delay);
-        source.Stop();
-        source.Play();
-    }
+        public void OnThingHappened(OnClickButtonEvent e)
+        {
+            StartCoroutine(PlayWithDelay());
+        }
 
-    private void OnDestroy()
-    {
-        // unsubscribe/deregister from the event if we destroy the object
-        EventMediator.Unsubscribe<OnClickButtonEvent>(OnThingHappened);
+        IEnumerator PlayWithDelay()
+        {
+            yield return new WaitForSeconds(delay);
+            source.Stop();
+            source.Play();
+        }
+
+        private void OnDestroy()
+        {
+            // unsubscribe/deregister from the event if we destroy the object
+            EventMediator.Unsubscribe<OnClickButtonEvent>(OnThingHappened);
+        }
     }
 }

@@ -1,28 +1,31 @@
 using UnityEngine;
 
-public abstract class Event 
+namespace DesignPatterns.EventMediator
 {
-    
-}
-
-public class AudioEvent : Event
-{
-    public readonly AudioClip Clip;
-    public readonly float Volume;
-
-    public AudioEvent(AudioClip clip, float volume)
+    public abstract class Event
     {
-        Clip = clip;
-        Volume = volume;
+
     }
-}
 
-public class OnClickButtonEvent : Event
-{
-    public readonly GameObject Button;
-
-    public OnClickButtonEvent(GameObject button)
+    public class AudioEvent : Event
     {
-        Button = button;
+        public readonly AudioClip Clip;
+        public readonly float Volume;
+
+        public AudioEvent(AudioClip clip, float volume)
+        {
+            Clip = clip;
+            Volume = volume;
+        }
+    }
+
+    public class OnClickButtonEvent : Event
+    {
+        public readonly GameObject Button;
+
+        public OnClickButtonEvent(GameObject button)
+        {
+            Button = button;
+        }
     }
 }

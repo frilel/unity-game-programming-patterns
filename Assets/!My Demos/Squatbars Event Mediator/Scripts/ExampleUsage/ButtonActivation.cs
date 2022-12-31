@@ -3,38 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-public class ButtonActivation : MonoBehaviour
+
+namespace DesignPatterns.EventMediator
 {
-    private Collider collider;
-
-    void Start()
+    [RequireComponent(typeof(Collider))]
+    public class ButtonActivation : MonoBehaviour
     {
-        collider = GetComponent<Collider>();
-    }
+        private Collider collider;
 
-    public void OnClickButton()
-    {
-        new OnClickButtonEvent(this.gameObject).Fire();
-    }
-
-    void Update()
-    {
-        CheckCollider();
-    }
-
-    private void CheckCollider()
-    {
-        if (Input.GetMouseButtonDown(0))
+        void Start()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
+            collider = GetComponent<Collider>();
+        }
 
-            if (Physics.Raycast(ray, out hitInfo, 100f))
+        public void OnClickButton()
+        {
+            new OnClickButtonEvent(this.gameObject).Fire();
+        }
+
+        void Update()
+        {
+            CheckCollider();
+        }
+
+        private void CheckCollider()
+        {
+            if (Input.GetMouseButtonDown(0))
             {
-                if (hitInfo.collider == this.collider)
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hitInfo;
+
+                if (Physics.Raycast(ray, out hitInfo, 100f))
                 {
-                    OnClickButton();
+                    if (hitInfo.collider == this.collider)
+                    {
+                        OnClickButton();
+                    }
                 }
             }
         }

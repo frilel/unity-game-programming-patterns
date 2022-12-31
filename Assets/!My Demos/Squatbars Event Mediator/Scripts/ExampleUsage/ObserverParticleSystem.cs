@@ -1,27 +1,30 @@
 using UnityEngine;
 
-public class ObserverParticleSystem : MonoBehaviour
+namespace DesignPatterns.EventMediator
 {
-    [SerializeField] ParticleSystem particleSystem;
-
-    private void Start()
+    public class ObserverParticleSystem : MonoBehaviour
     {
-        EventMediator.Subscribe<OnClickButtonEvent>(OnThingHappened);
-    }
+        [SerializeField] ParticleSystem particleSystem;
 
-    private void OnThingHappened(OnClickButtonEvent e)
-    {
-        if (particleSystem != null)
+        private void Start()
         {
-            particleSystem.Stop();
-            particleSystem.Play();
+            EventMediator.Subscribe<OnClickButtonEvent>(OnThingHappened);
         }
-    }
 
-    private void OnDestroy()
-    {
-        // unsubscribe/deregister from the event if we destroy the object
-        EventMediator.Unsubscribe<OnClickButtonEvent>(OnThingHappened);
-    }
+        private void OnThingHappened(OnClickButtonEvent e)
+        {
+            if (particleSystem != null)
+            {
+                particleSystem.Stop();
+                particleSystem.Play();
+            }
+        }
 
+        private void OnDestroy()
+        {
+            // unsubscribe/deregister from the event if we destroy the object
+            EventMediator.Unsubscribe<OnClickButtonEvent>(OnThingHappened);
+        }
+
+    }
 }

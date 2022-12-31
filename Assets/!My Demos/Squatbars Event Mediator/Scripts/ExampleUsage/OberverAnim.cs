@@ -1,25 +1,28 @@
 using UnityEngine;
 
-public class ObserverAnim : MonoBehaviour
+namespace DesignPatterns.EventMediator
 {
-    [SerializeField] Animation animClip;
-    
-    void Start()
+    public class ObserverAnim : MonoBehaviour
     {
-        EventMediator.Subscribe<OnClickButtonEvent>(OnThingHappened);
-    }
+        [SerializeField] Animation animClip;
 
-    private void OnThingHappened(OnClickButtonEvent e)
-    {
-        if (animClip != null)
+        void Start()
         {
-            animClip.Stop();
-            animClip.Play();
+            EventMediator.Subscribe<OnClickButtonEvent>(OnThingHappened);
         }
-    }
 
-    private void OnDestroy()
-    {
-        EventMediator.Unsubscribe<OnClickButtonEvent>(OnThingHappened);
+        private void OnThingHappened(OnClickButtonEvent e)
+        {
+            if (animClip != null)
+            {
+                animClip.Stop();
+                animClip.Play();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            EventMediator.Unsubscribe<OnClickButtonEvent>(OnThingHappened);
+        }
     }
 }
