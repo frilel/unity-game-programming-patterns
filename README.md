@@ -4,3 +4,4 @@ The forked repo is presented in this blog post: https://blog.unity.com/games/lev
 
 # Notes for myself
 + Look at Unity's [Open Game Project](https://resources.unity.com/unitenow/open-projects) for more/alternative patterns. Uses ScriptableObject for many systems. Shorter versions as [Devlogs](https://www.youtube.com/watch?v=WLDgtRNK2VE).
++ Look at [PID controller](https://www.youtube.com/watch?v=y3K6FUgrgXw)
